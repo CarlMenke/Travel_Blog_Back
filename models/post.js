@@ -7,6 +7,7 @@ const Post = new Schema (
         location: {type : String , required: true},
         content: {type: String , required: true},
         likes: {type: Number, required: true},
+        comments: {type: Array, required: false},
     },
     {timestamps:true},
 )

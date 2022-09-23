@@ -58,9 +58,40 @@ const changeLikes = async (req,res) =>{
     }
 }
 
+const createComment = async (req,res) =>{
+    console.log('here')
+    try{
+        const name =  req.body.name
+        const content = req.body.content
+        const post_id =  req.body.post_id._id
+
+        const comment ={
+            name: name,
+            content: content,
+            post_id: post_id
+        }
+
+        
+        const post = await Post.findOne({_id:post_id})
+        
+        let comments = post.comments
+
+        const newPost = await Post.updateOne({_id:post_id},{$set:{comments:[...comments, comment]}})
+        
+        const lastPost = await Post.findOne({_id:post_id})
+
+        console.log(lastPost)
+        res.status(200).json(lastPost)
+
+    }catch(error){
+
+    }
+}
+
 
 module.exports = {
     createPost,
     getPosts,
-    changeLikes
+    changeLikes,
+    createComment
 }
